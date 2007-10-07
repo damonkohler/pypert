@@ -67,11 +67,11 @@ def GetXboxLiveFriends(login, passwd):
 
 if __name__ == '__main__':
   assert len(sys.argv) == 3, 'Usage: xbox_live.py login passwd'
-  login, passwd = sys.argv[1:2]
+  login, passwd = sys.argv[1:3]
   try:
     p = pertelian.Pertelian()
     while True:
-      friends = xbox_live.GetXboxLiveFriends()
+      friends = GetXboxLiveFriends(login, passwd)
       online = []
       for friend in friends:
         if friend[1] == 'Online':
