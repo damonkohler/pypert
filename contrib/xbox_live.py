@@ -35,6 +35,8 @@ from mechanize import Browser
 import pertelian
 import sys
 import time
+import traceback
+import urllib2
 
 FRIEND_TABLE_CLASS = 'XbcProfileTable XbcFriendsListTable'
 GAMER_TAG_CLASS = 'XbcGamerTag'
@@ -52,6 +54,7 @@ def GetXboxLiveFriends(login, passwd):
   br.select_form(name='fmHF')
   response = br.submit()  # Submit redirect form.
   friend_list = response.read()
+  response.close()
 
   soup = BeautifulSoup(friend_list)
   friend_table = soup.find('table', {'class': FRIEND_TABLE_CLASS})
@@ -71,19 +74,25 @@ if __name__ == '__main__':
   try:
     p = pertelian.Pertelian()
     while True:
-      friends = GetXboxLiveFriends(login, passwd)
-      online = []
-      for friend in friends:
-        if friend[1] == 'Online':
-          online.append(friend[0])
-      online.sort()
-      p.Clear()
-      if online:
-        p.Backlight(True)
-        p.Message(' '.join(online))
+      try:
+        friends = GetXboxLiveFriends(login, passwd)
+      except urllib2.URLError:
+        traceback.print_exc()
+        p.Clear()
+        p.WrapMessage('Failed to retrieve friends list.')
       else:
-        p.Backlight(False)
-        p.Message('No friends online.')
+        online = []
+        for friend in friends:
+          if friend[1] == 'Online':
+            online.append(friend[0])
+        online.sort()
+        p.Clear()
+        if online:
+          p.Backlight(True)
+          p.Message(', '.join(online))
+        else:
+          p.Backlight(False)
+          p.Message('No friends online.')
       time.sleep(30)
   except KeyboardInterrupt:
     pass

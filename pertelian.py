@@ -104,12 +104,11 @@ class Pertelian(object):
       if len(line) + len(word) < CHARACTER_WIDTH:
         line += ' ' + word
       else:
-        padding = CHARACTER_WIDTH - len(line)
-        lines.append(line + ' ' * padding)
+        lines.append(line.ljust(CHARACTER_WIDTH))
         line = word
-    lines.append(line)
+    lines.append(line.ljust(CHARACTER_WIDTH))
     while len(lines) < 4:
-      lines.append('')  # Add any missing blank lines.
+      lines.append(' ' * CHARACTER_WIDTH)  # Add any missing blank lines.
     # The Pertelian displays lines a little out of order.
     self.Message(lines[0])
     self.Message(lines[2])
