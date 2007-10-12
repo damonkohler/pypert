@@ -89,10 +89,10 @@ if __name__ == '__main__':
         p.Clear()
         if online:
           p.Backlight(True)
-          p.Message(', '.join(online))
+          p.WrapMessage(', '.join(online))
         else:
           p.Backlight(False)
-          p.Message('No friends online.')
+          p.WrapMessage('No friends online.')
       time.sleep(30)
   except KeyboardInterrupt:
     pass
