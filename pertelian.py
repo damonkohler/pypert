@@ -29,6 +29,7 @@ import struct
 import time
 
 CHARACTER_WIDTH = 20  # Number of characters that will fit on a line.
+INSTRUCTION_DELAY = 0.01  # Number of seconds to wait between bytes.
 
 
 class Pertelian(object):
@@ -54,9 +55,9 @@ class Pertelian(object):
     for byte in (0x38, 0x06, 0x10, 0x0c, 0x01):
       self._SendInstruction(byte)
 
-  def _SendBytes(self, bytes, delay=0.01, pack='B'):
+  def _SendBytes(self, bytes, delay=INSTRUCTION_DELAY, pack='B'):
     """Send a stream of bytes to the Pertelian.
-    
+
     Also, sleep for delay seconds between sending each byte.
 
     """
@@ -92,8 +93,9 @@ class Pertelian(object):
 
   def WrapMessage(self, msg):
     """Wrap messages to display on the Pertelian.
-    
-    TODO(damonkohler): Add support for words longer than CHARACTER_WIDTH.
+
+    TODO(damonkohler): Add support for words longer than CHARACTER_WIDTH and
+    for new lines.
 
     """
     words = msg.split()
