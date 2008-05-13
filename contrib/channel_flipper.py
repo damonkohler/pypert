@@ -50,12 +50,16 @@ if __name__ == '__main__':
   for c in channels:
     try:
       c.SetUp()
+    except KeyboardInterrupt:
+      sys.exit(1)
     except:
       traceback.print_exc()
   try:
     for c in itertools.cycle(channels):
       try:
         c.Display()
+      except KeyboardInterrupt:
+        raise
       except:
         traceback.print_exc()
       else:

@@ -37,14 +37,20 @@ class GmailNotifier(channel.Channel):
 
   def SetUp(self):
     print 'Gmail Notifier Channel Setup'
-    while True:
-      print 'Login:',
-      self.login = str(raw_input())
-      self.passwd = getpass.getpass()
-      if 'Error' in self.GetFeed().feed.subtitle:
-        print 'Error. Please try again.'
-      else:
-        break
+    if self.settings:
+      self.login = self.settings['login']
+      self.passwd = self.settings['passwd']
+      print 'Loaded saved settings.'
+    else:
+      while True:
+        print 'Login:',
+        self.login = str(raw_input())
+        self.passwd = getpass.getpass()
+        if 'Error' in self.GetFeed().feed.subtitle:
+          print 'Error. Please try again.'
+        else:
+          break
+      self.Save({'login': self.login, 'passwd': self.passwd})
 
   def GetFeed(self):
     return feedparser.parse(GMAIL_FEED % (self.login, self.passwd))

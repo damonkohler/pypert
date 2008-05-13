@@ -53,9 +53,15 @@ class XboxLive(channel.Channel):
 
   def SetUp(self):
     print 'Xbox Live Channel Setup'
-    print 'Login:',
-    self.login = str(raw_input())
-    self.passwd = getpass.getpass()
+    if self.settings:
+      self.login = self.settings['login']
+      self.passwd = self.settings['passwd']
+      print 'Loaded saved settings.'
+    else:
+      print 'Login:',
+      self.login = str(raw_input())
+      self.passwd = getpass.getpass()
+      self.Save({'login': self.login, 'passwd': self.passwd})
 
   def GetXboxLiveFriends(self):
     """Return a list of tuples (gamer_tag, gamer_presence)."""

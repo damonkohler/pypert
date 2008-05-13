@@ -24,11 +24,21 @@
 
 """Channels can be displayed on the Pertelian."""
 
+import os
+import shelve
+
 
 class Channel(object):
 
+  _settings = shelve.open(os.path.expanduser('~/.pypert'))
+
   def __init__(self, pert):
     self.pert = pert
+    self.settings = self._settings.get(self.__class__.__name__, {})
+
+  def Save(self, data):
+    self._settings[self.__class__.__name__] = data
+    self._settings.sync()
 
   def SetUp(self):
     pass
