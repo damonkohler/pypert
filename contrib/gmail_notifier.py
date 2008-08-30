@@ -30,7 +30,7 @@ import channel
 import feedparser
 import getpass
 
-GMAIL_FEED = 'https://%s:%s@gmail.google.com/gmail/feed/atom'
+GMAIL_FEED = 'https://%s:%s@mail.google.com/mail/feed/atom'
 
 
 class GmailNotifier(channel.Channel):
