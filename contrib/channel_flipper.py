@@ -35,7 +35,7 @@ import gmail_notifier
 import weather
 import xbox_live
 
-CYCLE_DELAY = 2
+CYCLE_DELAY = 10
 
 
 if __name__ == '__main__':
