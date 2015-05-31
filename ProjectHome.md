@@ -1,0 +1,1 @@
+PyPert is a high-level interface to the Pertelian X2040 USB LCD display (http://pertelian.com/). It relies on PySerial. Also included in this project are various uses of PyPert. For example, displaying a list of your friends on Xbox Live.
